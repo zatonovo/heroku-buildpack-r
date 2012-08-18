@@ -1,3 +1,5 @@
+R=0  # See https://github.com/clbustos/rinruby/blob/master/lib/rinruby.rb#L786 for details
+
 require 'sinatra'
 require 'rinruby'
 
@@ -14,17 +16,20 @@ get '/' do
 
   begin
 
-    R.eval "x <- rnorm(#{sample_size})"
-    R.eval "summary(x)"
-    R.eval "sd(x)"
-    R.eval "print('Hello World from R')"
+    r = RinRuby.new(:interactive => false)
+
+    r.sample_size = sample_size
+    r.eval "x <- rnorm(sample_size)"
+    r.eval "summary(x)"
+    r.eval "sd(x)"
+    r.eval "print('Hello World from R')"
 
     html += "<p>Suceeded running R code...</p>"
 
   rescue
     html += "<p>Failed running R code...</p>"
   ensure
-    R.quit
+    r.quit
   end
 
   html += "</html>"
