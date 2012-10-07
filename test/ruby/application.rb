@@ -1,5 +1,5 @@
 require 'sinatra'
-require 'rinruby'
+require 'rsruby'
 
 # root page
 get '/' do
@@ -14,17 +14,20 @@ get '/' do
 
   begin
 
-    R.eval "x <- rnorm(#{sample_size})"
-    R.eval "summary(x)"
-    R.eval "sd(x)"
-    R.eval "print('Hello World from R')"
+    r = RSRuby.instance
+
+    r.assign('sample_size', sample_size)
+    r.eval_R("x <- rnorm(sample_size)")
+    r.eval_R("summary(x)")
+    r.eval_R("sd(x)")
+    r.eval_R("print('Hello World from R')")
 
     html += "<p>Suceeded running R code...</p>"
 
   rescue
-    html += "<p>Failed running R code...</p>"
+    html += "<p>Failed running R code:</p>"
   ensure
-    R.quit
+    r.shutdown
   end
 
   html += "</html>"

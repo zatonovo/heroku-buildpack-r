@@ -2,5 +2,5 @@ source "http://rubygems.org"
 
 gem "thin"
 gem "sinatra"
-gem "rinruby"
+gem "rsruby"
 gem "foreman", :group => :development

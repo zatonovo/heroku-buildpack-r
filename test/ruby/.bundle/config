@@ -1,0 +1,2 @@
+---
+BUNDLE_BUILD__RSRUBY: --with-R-dir=/app/vendor/R/lib64/R --with-ldflags="-L/app/vendor/gcc-4.3/lib64/"
