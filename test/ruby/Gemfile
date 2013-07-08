@@ -1,6 +1,7 @@
-puts ENV['R_HOME']
-puts ENV['R_INCLUDE']
+puts "R_HOME    => #{ENV['R_HOME']}"
+puts "R_INCLUDE => #{ENV['R_INCLUDE']}"
 
+ruby '1.9.3'
 source "http://rubygems.org"
 
 gem "thin"

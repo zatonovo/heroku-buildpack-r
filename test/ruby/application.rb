@@ -1,5 +1,5 @@
-puts ENV['R_HOME']
-puts ENV['R_INCLUDE']
+puts "R_HOME    => #{ENV['R_HOME']}"
+puts "R_INCLUDE => #{ENV['R_INCLUDE']}"
 
 require 'sinatra'
 require 'rsruby'
