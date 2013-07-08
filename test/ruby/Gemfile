@@ -1,10 +1,8 @@
 source "http://rubygems.org"
+
 ruby '1.9.3'
 
 gem "thin"
 gem "sinatra"
-gem "rsruby"
+gem "rsruby-heroku", :git => 'https://github.com/logical42/rsruby-heroku.git', :branch => 'master'
 gem "foreman", :group => :development
-
-puts "R_HOME    => #{ENV['R_HOME']}"
-puts "R_INCLUDE => #{ENV['R_INCLUDE']}"
