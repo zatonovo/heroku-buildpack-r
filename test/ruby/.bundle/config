@@ -1,2 +1,0 @@
----
-BUNDLE_BUILD__RSRUBY: --with-R-include=$R_HOME/lib64/R/include
