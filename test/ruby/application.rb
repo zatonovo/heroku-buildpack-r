@@ -1,3 +1,6 @@
+puts ENV['R_HOME']
+puts ENV['R_INCLUDE']
+
 require 'sinatra'
 require 'rsruby'
 

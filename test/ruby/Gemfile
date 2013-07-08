@@ -1,3 +1,6 @@
+puts ENV['R_HOME']
+puts ENV['R_INCLUDE']
+
 source "http://rubygems.org"
 
 gem "thin"
