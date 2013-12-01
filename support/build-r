@@ -123,6 +123,11 @@ glibc_version=2.7
 download "http://ftp.gnu.org/gnu/glibc/glibc-$glibc_version.tar.gz" glibc_$glibc_version.tar.gz
 tar xzf $basedir/glibc_$glibc_version.tar.gz -C $vendordir
 
+# GSL
+gsl_version=1.6
+download "http://download.polytechnic.edu.na/pub/ftp.gnu.org/gnu/gsl/gsl-$gsl_version.tar.gz" gsl_$gsl_version.tar.gz
+tar xzf $basedir/gsl-$gsl_version.tar.gz -C $vendordir
+
 echo ============================================================
 echo Building dependencies...
 echo ======================================================================
@@ -133,6 +138,7 @@ build "$basedir/libpng-$libpng_version" libpng
 build "$basedir/pixman-$pixman_version" pixman
 build "$basedir/fontconfig-$fontconfig_version" fontconfig
 build "$basedir/cairo-$cairo_version" cairo
+build "$basedir/gsl-$gsl_version" gsl
 
 # build R
 echo ============================================================
