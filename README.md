@@ -12,6 +12,11 @@ the [R project homepage](http://www.r-project.org/) for further information.
 store identical, up-to-date, versions of code and documentation for R.
 
 ## Usage
+Set the buildpack accordingly.
+```
+heroku config:add BUILDPACK_URL="https://github.com/zatonovo/heroku-buildpack-r.git" -a YOUR_APP
+```
+
 Example usage:
 
 ```
