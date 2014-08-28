@@ -22,14 +22,16 @@ function indent() {
   esac
 }
 
-function install_zip() {
+function install_unzip() {
+  echo "Installing unzip"
   curl -o /tmp/unzip.tar.gz "http://somes3bucket.s3.amazonaws.com/unzip.tar.gz"
   cd /tmp && tar zxvf unzip.tar.gz
   cp /tmp/unzip610b/unix/Makefile /tmp/unzip610b/
   cd /tmp/unzip610b && make generic
   cp unzip /app/
-  cp zip /app/
+  echo "Done with unzip"
 }
+
 
 # clean up leaking environment
 unset GIT_DIR
@@ -114,5 +116,5 @@ echo "R $R_VERSION successfully installed" | indent
 # need to copy binaries back so that any installed packages are included in the slug
 cp -R /app/vendor/R/* $VENDOR_DIR/R
 
-install_zip
+install_unzip
 
