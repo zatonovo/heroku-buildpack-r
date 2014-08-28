@@ -39,13 +39,11 @@ function install_r_packages() {
   mkdir $VENDOR_DIR/packages
   cd $VENDOR_DIR/packages
 
-  set -x
   while read line
   do
     echo "Installing $line" | indent
     rpackage $line
   done < $BUILD_DIR/.rpackages
-  set +x
 }
 
 
