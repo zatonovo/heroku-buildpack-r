@@ -26,6 +26,24 @@ function configure_extra() {
   export R_UNZIPCMD='/usr/bin/jar xf'
 }
 
+function install_r_packages() {
+  if [ ! -d "$VENDOR_DIR/crant" ]
+  then
+    echo "Installing crant" | indent
+    git clone https://github.com/muxspace/crant.git $VENDOR_DIR
+  fi
+
+  [ ! -f ".r_packages" ] && return
+  mkdir $VENDOR_DIR/packages
+  cd $VENDOR_DIR/packages
+
+  while read line
+  do
+    echo "Installing $line" | indent
+    rpackage $line
+  done < $BUILD_DIR/.r_packages
+}
+
 
 # clean up leaking environment
 unset GIT_DIR
@@ -74,7 +92,7 @@ mkdir -p /app/vendor/R/lib64/R/lib
 cp /app/vendor/gcc/lib64/* /app/vendor/R/lib64/R/lib
 
 # R needs to know where gfortran and glibc header files are
-export PATH="/app/vendor/R/bin:/app/vendor/gcc/bin:$PATH"
+export PATH="/app/vendor/R/bin:/app/vendor/gcc/bin:/app/vendor/crant:$PATH"
 
 export LDFLAGS="-L/app/vendor/gcc/lib64 -L/app/vendor/gsl/lib"
 export CPPFLAGS="-I/app/vendor/glibc/string -I/app/vendor/glibc/time -I/app/vendor/gsl/include"
@@ -89,12 +107,13 @@ mkdir -p $BUILD_DIR/.profile.d
 cp "$BUILDPACK_DIR/bin/r_environment.sh" $BUILD_DIR/.profile.d/r_environment.sh
 
 
-# Install some dependencies
-configure_extra
-
 # Prevent warnings when building packages
 mkdir -p /app/vendor/R/lib64/R/doc/html
 touch /app/vendor/R/lib64/R/doc/html/R.css
+
+# Install some dependencies
+configure_extra
+install_r_packages
 
 # Install dependencies from CRAN
 echo "Executing init.r script" | indent
