@@ -23,7 +23,7 @@ function indent() {
 }
 
 function configure_extra() {
-  alias unzip='jar xf'
+  export R_UNZIPCMD='/usr/bin/jar xf'
 }
 
 
