@@ -9,9 +9,6 @@ set -e
 
 shopt -s extglob
 
-echo "BUILD_DIR = $1"
-echo "CACHE_DIR = $2/vendor"
-rm -rf /app/vendor/crant
 
 function error() {
   echo " !     $*" >&2
@@ -42,13 +39,18 @@ function install_r_packages() {
   mkdir $VENDOR_DIR/packages
   cd $VENDOR_DIR/packages
 
+  set -x
   while read line
   do
     echo "Installing $line" | indent
     rpackage $line
   done < $BUILD_DIR/.rpackages
+  set +x
 }
 
+
+echo "BUILD_DIR = $1" | indent
+echo "CACHE_DIR = $2/vendor" | indent
 
 # clean up leaking environment
 unset GIT_DIR
