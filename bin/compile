@@ -11,6 +11,7 @@ shopt -s extglob
 
 echo "BUILD_DIR = $1"
 echo "CACHE_DIR = $2/vendor"
+rm -rf /app/vendor/crant
 
 function error() {
   echo " !     $*" >&2
@@ -30,10 +31,11 @@ function configure_extra() {
 }
 
 function install_r_packages() {
-  if [ ! -d "/app/vendor/crant" ]
+  if [ ! -d "$VENDOR_DIR/crant" ]
   then
     echo "Installing crant" | indent
-    git clone https://github.com/muxspace/crant.git /app/vendor/crant
+    git clone https://github.com/muxspace/crant.git $VENDOR_DIR/crant
+    export PATH="$VENDOR_DIR/crant:$PATH"
   fi
 
   [ ! -f "$BUILD_DIR/.rpackages" ] && return
@@ -95,7 +97,7 @@ mkdir -p /app/vendor/R/lib64/R/lib
 cp /app/vendor/gcc/lib64/* /app/vendor/R/lib64/R/lib
 
 # R needs to know where gfortran and glibc header files are
-export PATH="/app/vendor/R/bin:/app/vendor/gcc/bin:/app/vendor/crant:$PATH"
+export PATH="/app/vendor/R/bin:/app/vendor/gcc/bin:$PATH"
 
 export LDFLAGS="-L/app/vendor/gcc/lib64 -L/app/vendor/gsl/lib"
 export CPPFLAGS="-I/app/vendor/glibc/string -I/app/vendor/glibc/time -I/app/vendor/gsl/include"
