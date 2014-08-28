@@ -139,3 +139,8 @@ echo "R $R_VERSION successfully installed" | indent
 # Need to copy binaries back so that any installed packages are included in the slug
 cp -R /app/vendor/R/* $VENDOR_DIR/R
 
+# Delete gcc libs to save space afterward
+rm -rf $VENDOR_DIR/gcc
+rm -rf $VENDOR_DIR/glibc
+rm -rf $VENDOR_DIR/gsl
+
