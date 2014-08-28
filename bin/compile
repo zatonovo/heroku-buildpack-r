@@ -33,7 +33,7 @@ function install_r_packages() {
     git clone https://github.com/muxspace/crant.git $VENDOR_DIR/crant
   fi
 
-  [ ! -f ".rpackages" ] && return
+  [ ! -f "$BUILD_DIR/.rpackages" ] && return
   mkdir $VENDOR_DIR/packages
   cd $VENDOR_DIR/packages
 
@@ -112,7 +112,7 @@ mkdir -p /app/vendor/R/lib64/R/doc/html
 touch /app/vendor/R/lib64/R/doc/html/R.css
 
 # Install some dependencies
-test -f ${build}/.git_ssl_no_verify && export GIT_SSL_NO_VERIFY=true
+test -f ${BUILD_DIR}/.git_ssl_no_verify && export GIT_SSL_NO_VERIFY=true
 configure_extra
 install_r_packages
 
