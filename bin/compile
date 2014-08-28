@@ -9,6 +9,9 @@ set -e
 
 shopt -s extglob
 
+echo "BUILD_DIR = $1"
+echo "CACHE_DIR = $2/vendor"
+
 function error() {
   echo " !     $*" >&2
   exit 1
@@ -27,10 +30,10 @@ function configure_extra() {
 }
 
 function install_r_packages() {
-  if [ ! -d "$VENDOR_DIR/crant" ]
+  if [ ! -d "/app/vendor/crant" ]
   then
     echo "Installing crant" | indent
-    git clone https://github.com/muxspace/crant.git $VENDOR_DIR/crant
+    git clone https://github.com/muxspace/crant.git /app/vendor/crant
   fi
 
   [ ! -f "$BUILD_DIR/.rpackages" ] && return
