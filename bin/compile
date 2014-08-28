@@ -30,7 +30,7 @@ function install_r_packages() {
   if [ ! -d "$VENDOR_DIR/crant" ]
   then
     echo "Installing crant" | indent
-    git clone https://github.com/muxspace/crant.git $VENDOR_DIR
+    git clone https://github.com/muxspace/crant.git $VENDOR_DIR/crant
   fi
 
   [ ! -f ".rpackages" ] && return
