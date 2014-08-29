@@ -25,7 +25,15 @@ function indent() {
 
 function configure_extra() {
   export R_UNZIPCMD='/usr/bin/jar xf'
+
+  if [ ! -d "$VENDOR_DIR/crant" ]
+  then
+    echo "Installing crant" | indent
+    git clone https://github.com/muxspace/crant.git $VENDOR_DIR/crant
+    export PATH="$VENDOR_DIR/crant:$PATH"
+  fi
 }
+
 
 function install_perl_modules() {
   [ ! -f "$BUILD_DIR/.perlmodules" ] && return
@@ -40,13 +48,6 @@ function install_perl_modules() {
 }
 
 function install_r_packages() {
-  if [ ! -d "$VENDOR_DIR/crant" ]
-  then
-    echo "Installing crant" | indent
-    git clone https://github.com/muxspace/crant.git $VENDOR_DIR/crant
-    export PATH="$VENDOR_DIR/crant:$PATH"
-  fi
-
   [ ! -f "$BUILD_DIR/.rpackages" ] && return
   mkdir $VENDOR_DIR/packages >> /dev/null 2>&1
   cd $VENDOR_DIR/packages
