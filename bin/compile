@@ -46,6 +46,7 @@ function install_perl_modules() {
     echo "Installing $line" | indent 1>&2
     rpackage -p $VENDOR_DIR/perl $line 1>&2
   done < $BUILD_DIR/.perlmodules
+  export PERL5LIB=$VENDOR_DIR/perl/share/perl/5.10.1
 }
 
 function install_r_packages() {
@@ -112,7 +113,6 @@ cp /app/vendor/gcc/lib64/* /app/vendor/R/lib64/R/lib
 
 # R needs to know where gfortran and glibc header files are
 export PATH="/app/vendor/R/bin:/app/vendor/gcc/bin:$PATH"
-export PERL5LIB=$VENDOR_DIR/perl
 
 export LDFLAGS="-L/app/vendor/gcc/lib64 -L/app/vendor/gsl/lib"
 export CPPFLAGS="-I/app/vendor/glibc/string -I/app/vendor/glibc/time -I/app/vendor/gsl/include"
