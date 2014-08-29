@@ -43,11 +43,9 @@ function install_perl_modules() {
 
   while read line
   do
-    echo "Installing $line" | indent
-    rpackage -p $VENDOR_DIR/perl $line
-    echo "Done"
+    echo "Installing $line" | indent 1>&2
+    rpackage -p $VENDOR_DIR/perl $line 1>&2
   done < $BUILD_DIR/.perlmodules
-  return 0
 }
 
 function install_r_packages() {
@@ -60,7 +58,6 @@ function install_r_packages() {
     echo "Installing $line" | indent
     rpackage $line
   done < $BUILD_DIR/.rpackages
-  return 0
 }
 
 
