@@ -57,7 +57,7 @@ function install_r_packages() {
   while read line
   do
     echo "Installing $line" | indent
-    rpackage $line
+    rpackage $line 1>&2
   done < $BUILD_DIR/.rpackages
 }
 
