@@ -56,6 +56,7 @@ function install_r_packages() {
   do
     echo "Installing $line" | indent
     rpackage $line
+    echo "Done"
   done < $BUILD_DIR/.rpackages
 }
 
