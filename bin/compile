@@ -27,6 +27,18 @@ function configure_extra() {
   export R_UNZIPCMD='/usr/bin/jar xf'
 }
 
+function install_perl_modules() {
+  [ ! -f "$BUILD_DIR/.perlmodules" ] && return
+  mkdir $VENDOR_DIR/packages >> /dev/null 2>&1
+  cd $VENDOR_DIR/packages
+
+  while read line
+  do
+    echo "Installing $line" | indent
+    rpackage -p $VENDOR_DIR/perl $line
+  done < $BUILD_DIR/.perlmodules
+}
+
 function install_r_packages() {
   if [ ! -d "$VENDOR_DIR/crant" ]
   then
@@ -44,18 +56,6 @@ function install_r_packages() {
     echo "Installing $line" | indent
     rpackage $line
   done < $BUILD_DIR/.rpackages
-}
-
-function install_perl_modules() {
-  [ ! -f "$BUILD_DIR/.perlmodules" ] && return
-  mkdir $VENDOR_DIR/packages >> /dev/null 2>&1
-  cd $VENDOR_DIR/packages
-
-  while read line
-  do
-    echo "Installing $line" | indent
-    rpackage -p $VENDOR_DIR/perl $line
-  done < $BUILD_DIR/.perlmodules
 }
 
 
@@ -132,8 +132,8 @@ touch /app/vendor/R/lib64/R/doc/html/R.css
 # Install some dependencies
 test -f ${BUILD_DIR}/.git_ssl_no_verify && export GIT_SSL_NO_VERIFY=true
 configure_extra
-install_r_packages
 install_perl_modules
+install_r_packages
 
 # Install dependencies from CRAN
 echo "Executing init.r script" | indent
