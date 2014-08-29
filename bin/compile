@@ -44,6 +44,7 @@ function install_perl_modules() {
   do
     echo "Installing $line" | indent
     rpackage -p $VENDOR_DIR/perl $line
+    echo "Done"
   done < $BUILD_DIR/.perlmodules
 }
 
@@ -56,7 +57,6 @@ function install_r_packages() {
   do
     echo "Installing $line" | indent
     rpackage $line
-    echo "Done"
   done < $BUILD_DIR/.rpackages
 }
 
