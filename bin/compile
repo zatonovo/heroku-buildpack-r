@@ -32,6 +32,7 @@ function configure_extra() {
     git clone https://github.com/muxspace/crant.git $VENDOR_DIR/crant
     export PATH="$VENDOR_DIR/crant:$PATH"
   fi
+  return 0
 }
 
 
@@ -46,6 +47,7 @@ function install_perl_modules() {
     rpackage -p $VENDOR_DIR/perl $line
     echo "Done"
   done < $BUILD_DIR/.perlmodules
+  return 0
 }
 
 function install_r_packages() {
@@ -58,6 +60,7 @@ function install_r_packages() {
     echo "Installing $line" | indent
     rpackage $line
   done < $BUILD_DIR/.rpackages
+  return 0
 }
 
 
