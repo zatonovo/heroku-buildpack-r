@@ -137,8 +137,8 @@ touch /app/vendor/R/lib64/R/doc/html/R.css
 # Install some dependencies
 test -f ${BUILD_DIR}/.git_ssl_no_verify && export GIT_SSL_NO_VERIFY=true
 configure_extra
-install_perl_modules
-install_r_packages
+junk=$(install_perl_modules)
+junk=$(install_r_packages)
 
 # Install dependencies from CRAN
 echo "Executing init.r script" | indent
