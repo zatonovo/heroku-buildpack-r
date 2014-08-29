@@ -46,10 +46,7 @@ function install_perl_modules() {
     echo "Installing $line" | indent 1>&2
     rpackage -p $VENDOR_DIR/perl $line 1>&2
   done < $BUILD_DIR/.perlmodules
-  set -x
   export PERL5LIB=$VENDOR_DIR/perl/share/perl/5.10.1
-  perl '-MDigest::HMAC_SHA1' -e ';'
-  set +x
 }
 
 function install_r_packages() {
