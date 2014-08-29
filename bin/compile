@@ -36,7 +36,7 @@ function install_r_packages() {
   fi
 
   [ ! -f "$BUILD_DIR/.rpackages" ] && return
-  mkdir $VENDOR_DIR/packages
+  mkdir $VENDOR_DIR/packages >> /dev/null 2>&1
   cd $VENDOR_DIR/packages
 
   while read line
@@ -44,6 +44,18 @@ function install_r_packages() {
     echo "Installing $line" | indent
     rpackage $line
   done < $BUILD_DIR/.rpackages
+}
+
+function install_perl_modules() {
+  [ ! -f "$BUILD_DIR/.perlmodules" ] && return
+  mkdir $VENDOR_DIR/packages >> /dev/null 2>&1
+  cd $VENDOR_DIR/packages
+
+  while read line
+  do
+    echo "Installing $line" | indent
+    rpackage -p $VENDOR_DIR/perl $line
+  done < $BUILD_DIR/.perlmodules
 }
 
 
@@ -98,6 +110,7 @@ cp /app/vendor/gcc/lib64/* /app/vendor/R/lib64/R/lib
 
 # R needs to know where gfortran and glibc header files are
 export PATH="/app/vendor/R/bin:/app/vendor/gcc/bin:$PATH"
+export PERL5LIB=$VENDOR_DIR/perl
 
 export LDFLAGS="-L/app/vendor/gcc/lib64 -L/app/vendor/gsl/lib"
 export CPPFLAGS="-I/app/vendor/glibc/string -I/app/vendor/glibc/time -I/app/vendor/gsl/include"
@@ -120,6 +133,7 @@ touch /app/vendor/R/lib64/R/doc/html/R.css
 test -f ${BUILD_DIR}/.git_ssl_no_verify && export GIT_SSL_NO_VERIFY=true
 configure_extra
 install_r_packages
+install_perl_modules
 
 # Install dependencies from CRAN
 echo "Executing init.r script" | indent
