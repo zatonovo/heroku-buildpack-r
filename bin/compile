@@ -41,8 +41,6 @@ function install_perl_modules() {
   mkdir $VENDOR_DIR/packages >> /dev/null 2>&1
   cd $VENDOR_DIR/packages
 
-  $BUILD_DIR/check_env.sh
-
   while read line
   do
     echo "Installing $line" | indent 1>&2
