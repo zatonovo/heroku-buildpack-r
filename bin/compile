@@ -48,7 +48,6 @@ function install_perl_modules() {
     echo "Installing $line" | indent 1>&2
     rpackage -p $VENDOR_DIR/perl $line 1>&2
   done < $BUILD_DIR/.perlmodules
-  export PERL5LIB=$VENDOR_DIR/perl/share/perl/5.10.1
 }
 
 function install_r_packages() {
@@ -134,6 +133,7 @@ mkdir -p /app/vendor/R/lib64/R/doc/html
 touch /app/vendor/R/lib64/R/doc/html/R.css
 
 # Install some dependencies
+export PERL5LIB=$VENDOR_DIR/perl/share/perl/5.10.1
 test -f ${BUILD_DIR}/.git_ssl_no_verify && export GIT_SSL_NO_VERIFY=true
 configure_extra
 junk=$(install_perl_modules)
