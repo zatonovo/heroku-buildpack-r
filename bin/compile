@@ -111,7 +111,6 @@ cp -R $VENDOR_DIR/R/* /app/vendor/R
 mkdir -p /app/vendor/R/lib64/R/lib
 cp /app/vendor/gcc/lib64/* /app/vendor/R/lib64/R/lib
 
-cp -R $VENDOR_DIR/perl /app/vendor/
 
 # R needs to know where gfortran and glibc header files are
 export PATH="/app/vendor/R/bin:/app/vendor/gcc/bin:$PATH"
@@ -139,6 +138,7 @@ test -f ${BUILD_DIR}/.git_ssl_no_verify && export GIT_SSL_NO_VERIFY=true
 configure_extra
 junk=$(install_perl_modules)
 junk=$(install_r_packages)
+[ -d "$VENDOR_DIR/perl" ] && cp -R $VENDOR_DIR/perl /app/vendor/
 
 # Install dependencies from CRAN
 echo "Executing init.r script" | indent
