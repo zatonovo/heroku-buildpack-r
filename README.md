@@ -11,39 +11,26 @@ the [R project homepage](http://www.r-project.org/) for further information.
 [CRAN](http://cran.r-project.org/) is a network of ftp and web servers around the world that
 store identical, up-to-date, versions of code and documentation for R.
 
-## Usage
-Set the buildpack accordingly.
-```
-heroku config:add BUILDPACK_URL="https://github.com/zatonovo/heroku-buildpack-r.git" -a YOUR_APP
-```
-
-Example usage:
-
-```
-$ ls
-init.r prog1.r prog2.r ...
-
-$ heroku create --stack cedar --buildpack http://github.com/virtualstaticvoid/heroku-buildpack-r.git
-
-$ git push heroku master
-...
------> Heroku receiving push
------> Fetching custom buildpack
------> R app detected
------> Vendoring R x.xx.x
-       Executing init.r script
-...
------> R successfully installed
-```
-
 The buildpack will detect your app makes use of R if it has the `init.r` file in the root.
 The R runtime is vendored into your slug, and includes the gcc compiler for fortran support.
+
+## Usage
+Set the buildpack accordingly. Note that it is currently only compatible with the cedar stack.
+```
+heroku config:add BUILDPACK_URL="https://github.com/zatonovo/heroku-buildpack-r.git" -a YOUR_APP
+heroku stack:set cedar -a YOUR_APP
+```
 
 To reference a specific version of the build pack, add the Git branch or tag name to the end of the build pack URL.
 
 ```
 $ heroku create --stack cedar --buildpack http://github.com/virtualstaticvoid/heroku-buildpack-r.git#master
 ```
+
+
+## Custom packages
+This version supports a file called `.rpackages` where you can list package names or full git URLs from which to install packages. You can also comment out individual lines as necessary.
+
 
 ## Installing R packages
 During the slug compilation process, the `init.r` R file is executed. Put code in this file to install any packages you may require.
